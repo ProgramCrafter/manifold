@@ -34,6 +34,7 @@ export function getNewContract(
   ante: number,
   closeTime: number,
   visibility: Visibility,
+  creatorTrades: 'allow' | 'block',
 
   // twitch
   isTwitchContract: boolean | undefined,
@@ -76,6 +77,7 @@ export function getNewContract(
     description,
     visibility,
     unlistedById: visibility === 'unlisted' ? creator.id : undefined,
+    creatorTrades,
     isResolved: false,
     createdTime,
     closeTime,
