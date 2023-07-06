@@ -114,6 +114,9 @@ export function NewContractPanel(props: {
   const [toggleVisibility, setToggleVisibility] = useState<
     'public' | 'unlisted'
   >('public')
+  const [creatorTrades, setCreatorTrades] = useState<
+    'allow' | 'block'
+  >('allow')
 
   useEffect(() => {
     if (selectedGroup?.privacyStatus == 'private') {
@@ -406,6 +409,25 @@ export function NewContractPanel(props: {
         </>
       )}
       <Spacer h={6} />
+      <Row className="items-center gap-2">
+        <span>
+          Block own trades {' '}
+          <InfoTooltip
+            text={
+              creatorTrades === 'allow'
+                ? 'You can trade on this market'
+                : 'As creator, you cannot trade on this market'
+            }
+          />
+        </span>
+        <ShortToggle
+          on={creatorTrades === 'block'}
+          setOn={(on) => {
+            setCreatorTrades(on ? 'block' : 'allow')
+          }}
+        />
+      </Row>
+      <Spacer h={6} />
 
       <span className={'text-error'}>{errorText}</span>
       <Row className="items-end justify-between">
@@ -529,6 +551,10 @@ const useNewContract = (
   const [visibility, setVisibility] = usePersistentLocalState<Visibility>(
     (params?.visibility as Visibility) ?? 'public',
     `new-visibility${'-' + params?.groupId ?? ''}`
+  )
+  const [creatorTrades, setCreatorTrades] = usePersistentLocalState<'allow' | 'block'>(
+    params?.creatorTrades ?? 'allow',
+    'new-creator-trades'
   )
   const [newContract, setNewContract] = useState<Contract | undefined>(
     undefined
@@ -667,6 +693,7 @@ const useNewContract = (
     setInitialValueString('')
     setIsLogScale(false)
     setBountyAmount(50)
+    setCreatorTrades('allow')
   }
 
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -690,6 +717,7 @@ const useNewContract = (
           answers,
           groupId: selectedGroup?.id,
           visibility,
+          creatorTrades,
           utcOffset: new Date().getTimezoneOffset(),
           totalBounty: bountyAmount,
         })
@@ -747,6 +775,8 @@ const useNewContract = (
     newContract,
     bountyAmount,
     setBountyAmount,
+    creatorTrades,
+    setCreatorTrades,
   }
 }
 
