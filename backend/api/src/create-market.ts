@@ -58,6 +58,7 @@ export async function createMarketHelper(body: schema, auth: AuthedUser) {
     outcomeType,
     groupId,
     visibility,
+    creatorTrades,
     isTwitchContract,
     utcOffset,
     min,
@@ -105,6 +106,7 @@ export async function createMarketHelper(body: schema, auth: AuthedUser) {
       ante,
       closeTimestamp,
       visibility,
+      creatorTrades,
       isTwitchContract ? true : undefined,
       NUMERIC_BUCKET_COUNT,
       min ?? 0,
@@ -232,6 +234,7 @@ function validateMarketBody(body: any) {
     visibility = 'public',
     isTwitchContract,
     utcOffset,
+    creatorTrades = 'allow',
   } = validate(bodySchema, body)
 
   let min: number | undefined,
@@ -289,6 +292,7 @@ function validateMarketBody(body: any) {
     outcomeType,
     groupId,
     visibility,
+    creatorTrades,
     isTwitchContract,
     utcOffset,
     min,
@@ -493,6 +497,7 @@ const bodySchema = z.object({
   outcomeType: z.enum(OUTCOME_TYPES),
   groupId: z.string().min(1).max(MAX_ID_LENGTH).optional(),
   visibility: z.enum(VISIBILITIES).optional(),
+  creatorTrades: z.enum(['allow', 'block']).optional(),
   isTwitchContract: z.boolean().optional(),
   utcOffset: z.number().optional(),
 })
