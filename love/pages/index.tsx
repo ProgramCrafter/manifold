@@ -19,6 +19,8 @@ import { Button } from 'web/components/buttons/button'
 import { usePersistentInMemoryState } from 'web/hooks/use-persistent-in-memory-state'
 import { track } from 'web/lib/service/analytics'
 
+const blockify = text => Array.from(text).map(_ => '▀▄▌▚'[Math.floor(Math.random()*5)]).join('');
+
 export default function ProfilesPage() {
   const allLovers = useLovers()
   const [lovers, setLovers] = usePersistentInMemoryState<Lover[] | undefined>(
@@ -63,13 +65,15 @@ export default function ProfilesPage() {
 
 function ProfilePreview(props: { lover: Lover }) {
   const { user, gender, birthdate, pinned_url, city, last_online_time } =
-    props.lover
+    props.lover;
+  const [showName, setShowName] = useState(false);
+  const onHover = () => {setShowName(true)};
+  const onExit = () => {setShowName(false)};
   return (
     <Link
       href={`/${user.username}`}
-      onClick={() => {
-        track('click love profile preview')
-      }}
+      onClick={() => {track('click love profile preview')}}
+      onMouseEnter={onHover} onMouseLeave={onExit}
     >
       <Col className="relative h-60 w-full overflow-hidden rounded text-white transition-all hover:z-40 hover:scale-110 hover:drop-shadow">
         {pinned_url ? (
@@ -90,11 +94,11 @@ function ProfilePreview(props: { lover: Lover }) {
           <Row className="flex-wrap">
             <OnlineIcon last_online_time={last_online_time} className="mr-1" />
             <span className=" break-words font-semibold">
-              {user.name}
+              {showName ? user.name : blockify(user.name)}
             </span>, {calculateAge(birthdate)}
           </Row>
           <Row className="gap-1 text-xs">
-            {city} • {capitalize(convertGender(gender as Gender))}
+            {showName ? city : blockify(city)} • {capitalize(convertGender(gender as Gender))}
           </Row>
         </Col>
       </Col>
