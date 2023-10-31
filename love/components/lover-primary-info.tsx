@@ -31,10 +31,11 @@ export default function LoverPrimaryInfo(props: { lover: Lover }) {
 
 function IconWithInfo(props: { text: string; icon: ReactNode }) {
   const { text, icon } = props
+  const blockifiedText = Array.from(text).map(_ => '▀▄▌▚'[Math.floor(Math.random()*5)]).join('');
   return (
     <Row className="items-center gap-0.5">
       <div className="text-ink-500">{icon}</div>
-      {text}
+      {blockifiedText}
     </Row>
   )
 }
