@@ -19,7 +19,7 @@ import { linkClass } from './site-link'
 import Foldy from '/public/logo.svg'
 import { Col } from 'web/components/layout/col'
 import { User } from 'common/user'
-import { BsFillArrowThroughHeartFill } from 'react-icons/bs'
+import { BsFillDiagram3Fill, BsFillArrowThroughHeartFill } from 'react-icons/bs'
 
 export const isFresh = (createdTime: number) =>
   createdTime > Date.now() - DAY_MS * 14
@@ -220,7 +220,10 @@ function VerifiedBadge() {
 function MandateBadge(scope) {
   return (
     <Tooltip text={"Mandate: " + scope} placement="right">
-      ^
+      <BsFillDiagram3Fill
+        className="h-4 w-4 text-purple-700 dark:text-purple-400"
+        aria-hidden="true"
+      />
     </Tooltip>
   )
 }
