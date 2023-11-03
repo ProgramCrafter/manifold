@@ -4,6 +4,7 @@ import {
   BOT_USERNAMES,
   MOD_USERNAMES,
   VERIFIED_USERNAMES,
+  DECORATIVE_MANDATES,
   CORE_USERNAMES,
   MVP,
 } from 'common/envs/constants'
