@@ -220,6 +220,13 @@ export const VERIFIED_USERNAMES = [
   'KnowNothing',
 ]
 
+// Not checked out with everyone that they are OK with badge!
+export const DECORATIVE_MANDATES = {
+  'EliezerYudkowsky': {'scope': 'Rationalist community'},
+  'AnT':              {'scope': 'Crypto/teens'},
+  'LizLovelace':      {'scope': 'Habr'},  // https://manifold.markets/AnT/will-manifold-create-a-corporate-bl#igrMxL4zIZOxppl6DFRz
+}
+
 export const HOUSE_BOT_USERNAME = 'acc'
 
 export function firestoreConsolePath(contractId: string) {
