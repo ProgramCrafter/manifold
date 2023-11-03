@@ -159,6 +159,10 @@ export function UserBadge(props: {
   if (VERIFIED_USERNAMES.includes(username)) {
     badges.push(<VerifiedBadge key="check" />)
   }
+  if (DECORATIVE_MANDATES.includes(username)) {
+    const scope = DECORATIVE_MANDATES[username].scope
+    badges.push(<MandateBadge key="mandate" scope={scope} />)
+  }
   if (fresh) {
     badges.push(<FreshBadge key="fresh" />)
   }
@@ -207,6 +211,15 @@ function VerifiedBadge() {
   return (
     <Tooltip text="Verified" placement="right">
       <BadgeCheckIcon className="text-primary-700 h-4 w-4" aria-hidden />
+    </Tooltip>
+  )
+}
+
+// Show a mandate badge next to users advocating for Manifold and representing its interests
+function MandateBadge(scope) {
+  return (
+    <Tooltip text={"Mandate: " + scope} placement="right">
+      ^
     </Tooltip>
   )
 }
